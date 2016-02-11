@@ -1,6 +1,6 @@
 require File.expand_path('../../../test_helper', __FILE__)
 
-class IssuePatchTest < ActiveSupport::TestCase
+class JournalPatchTest < ActiveSupport::TestCase
   fixtures :issues, :users, :projects, :trackers, :projects_trackers, :issue_statuses, :enumerations
 
   test 'calls notifier after update' do
@@ -9,11 +9,12 @@ class IssuePatchTest < ActiveSupport::TestCase
     issue = Issue.create!(project_id: 1, tracker_id: 1, author_id: user.id,
                   status_id: 1, priority: IssuePriority.all.first,
                   subject: 'test_create')
+    journal = Journal.create!(:journalized => Issue.first, :user => User.first)
 
     mock = MiniTest::Mock.new
     mock.expect :call, nil, [issue.id, user.id]
     WebHook::Notifier.stub :perform, mock do
-      issue.subject = 'test_update'
+      journal.notes = 'Lorem Ipsum'
       issue.save!
     end
     mock.verify

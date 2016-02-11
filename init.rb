@@ -1,5 +1,6 @@
 require 'web_hook/notifier'
 require 'web_hook/patches/issue_patch'
+require 'web_hook/patches/journal_patch'
 
 Redmine::Plugin.register :redmine_web_hook do
   name 'Redmine Web Hook plugin'
