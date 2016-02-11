@@ -13,7 +13,7 @@ module WebHook
 
       module InstanceMethods
         def notify_about_update
-          WebHook::Notifier.perform(self.id, User.current.id)
+          WebHook::Notifier.perform(id, User.current.id)
         end
       end
     end
