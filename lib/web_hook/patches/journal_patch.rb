@@ -11,12 +11,13 @@ module WebHook
           # after_update callback, no need to catch event here
           # for the second time
           after_update :notify_about_update
+          after_destroy :notify_about_update
         end
       end
 
       module InstanceMethods
         def notify_about_update
-          WebHook::Notifier.send(journalized_id, User.current.id)
+          WebHook::Notifier.perform(journalized_id, User.current.id)
         end
       end
     end
