@@ -1,3 +1,0 @@
-= redmine_web_hook
-
-Description goes here
